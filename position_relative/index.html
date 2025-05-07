@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/position_relative/style.css"> -->
+    <title>Document</title>
+</head>
+<body>
+    <div class="parent">
+        Parent
+        <div class="child child-one">Child One</div>
+        <div class="child child-two">Child Two</div>
+        <div class="child child-three">Child Three</div>
+    </div>
+</body>
+</html>
+
+<style>
+    
+    body {
+        height: 300vh;
+        width: 50vw;
+    }
+
+    .parent {
+        width: 200px;
+        height: 200px;
+        background: yellow;
+        padding: 8px;
+        /* position: relative; */
+        margin: 50px;
+    }
+
+    .child-one {
+        background-color: green;
+        /* position: absolute;
+        top: 50px; */
+    }
+
+    .child-two {
+        background-color: red;
+    }
+
+    .child-three {
+        background-color: rgb(17, 0, 255);
+        position: absolute;
+        /* top: 50px; */
+        /* left: 0; */
+        bottom: 0;
+    }
+    
+
+    .child {
+        padding: 4px;
+        
+    }
+
+</style>
