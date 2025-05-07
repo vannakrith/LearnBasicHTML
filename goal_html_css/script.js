@@ -141,7 +141,7 @@
 //balance > 0? console.log('positive'):console.log('negative')
 
 
-// //Operator
+// //Operator with truth and false
 // const balance = 100;
 // if (balance < 10) {
 //     console.log(true)
@@ -149,3 +149,29 @@
 // else {
 //     console.log(false)
 // }
+
+//Operator with ===, it will take type to consider as well, in this it will be false
+// const balance = '100';
+// if (balance === 100) {
+//     console.log(true)
+// }
+// else {
+//     console.log(false)
+// }
+
+//True and false values
+
+// const balance = "";
+// if (balance) {
+//     console.log(true)
+// }else {
+//     console.log(false)
+// }
+
+// Falsy Values in JavaScript:
+// Empty string ""
+// 0
+// null
+// undefined
+// NaN
+// false
