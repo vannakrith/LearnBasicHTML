@@ -262,6 +262,10 @@ button {
     left: 0;
 }
 
+.input {
+    padding: 8px;
+}
+
 
 @media screen and (max-width: 800px) {
     .wrapper {
@@ -298,6 +302,10 @@ button {
 
     .input-form {
         width: 90%;
+    }
+
+    .input {
+        padding: 8px;
     }
 }
 

@@ -4,29 +4,102 @@ const balanceNumberEl = document.querySelector('.balance-number');
 const incomeAmountEl = document.querySelector('.income-amount');
 const expenseAmountEl = document.querySelector('.expenses-amount');
 const formEl = document.querySelector('.input-form');
-const inputDescriptionEl = document.querySelector('.input input--description');
-const inputAmountEl = document.querySelector('.input input--amount');
+const inputDescriptionEl = document.querySelector('.input--description');
+const inputAmountEl = document.querySelector('.input--amount');
 
-const removeTransactionItemEl = transactionContainerEl.addEventListener('click', (event) => {
+
+const submitHandler = (submitEvent) => {
+
+    //Prevent default behavior
+    submitEvent.preventDefault();
+    const description = inputDescriptionEl.value;
+    const inputAmount = +inputAmountEl.value;
+    //console.log(description)
+    //console.log(inputAmount)
     
+    //Create Transaction Elements in HTML
+    const transactionItemHTML = `
+        <li class="transaction transaction--${inputAmount > 0 ? 'income' : 'expenses'}">
+            <span class="transaction__text">${description}</span>
+            <span class="transaction__amount">${inputAmount}</span>
+            <button class="transaction__btn">x</button>
+        </li>
+    `;
+    
+    //Insert new HTML
+    transactionContainerEl.insertAdjacentHTML('beforeend', transactionItemHTML); 
+    
+    /* 
+    Usage: It's the method of Element interface parses the specified text as HTML or XML and inserts the resulting nodes into the DOM tree at a specified position.
+    // syntax: element.insertAdjacentHTML(position, htmlString)
+    'beforebegin' - ⬆️ Before the element itself
+    'afterbegin' - ➡️ Just inside the element, before its first child
+    'beforeend' - ⬅️ Just inside the element, after its last child
+    'afterend' - ⬇️ After the element itself
+    */
+    
+    
+    
+    //Update income or expenses after user Submit the form
+    if (inputAmount > 0) {
+        //Update income
+        const currentIncome = +incomeAmountEl.textContent;
+        const updatedIncome = currentIncome + inputAmount;
+        incomeAmountEl.textContent = updatedIncome
+        console.log(`Current Income: ${currentIncome}`);
+        console.log(`Updated Income: ${updatedIncome}`);
+    }
+    else {
+        //Update expenses
+        const currentExpenses = +expenseAmountEl.textContent;
+       const updatedExpenses = currentExpenses + (inputAmount*-1); //We * -1 because we avoid the expenses calculation become positive that (-) and (-) = +
+       expenseAmountEl.textContent = updatedExpenses
+        console.log(`Current Expenses: ${currentExpenses}`)
+        console.log(`Updated Current Expenses: ${updatedExpenses}`)
+    }
+    
+    //Update Main Balance
+    const income = +incomeAmountEl.textContent;
+    const expenses = +expenseAmountEl.textContent;
+    const updatedMainBalance = income - expenses;
+    balanceNumberEl.textContent = updatedMainBalance;
+    
+     //Clear form input
+     formEl.reset();
+    
+     //Unfocus form input
+     inputAmountEl.blur();
+    
+     //Make Balance red
+    if (updatedMainBalance < 0) {
+        balanceNumberEl.style.color = 'red';
+    }
+
+};
+
+formEl.addEventListener ('submit', submitHandler )
+
+
+const clickHandler = (event) => {
+
     //Remove transaction item
     const removeTransactionItemAction = event.target.parentNode; // .target.parentNode is to target the parent element of the clicked element
     removeTransactionItemAction.remove(); //The remove() method removes an element (or node) from the document.
-
-
+    
+    
     //Log removed item
     const removedItem = removeTransactionItemAction.querySelector('.transaction__text');
     console.log(`Removed Item: ${removedItem.textContent}`);
-
+    
     //Find transaction amount and convert to number
     const transactionAmountEl = removeTransactionItemAction.querySelector('.transaction__amount');
     const transactionAmount = +transactionAmountEl.textContent; //Use + to convert from string to number data type, it's unary plus operator
     console.log(`Transaction Amount: ${transactionAmount}`);
-
+    
     if (transactionAmount > 0) {
         //Update income
         const currentIncome = +incomeAmountEl.textContent;
-        const updatedIncome = currentIncome + transactionAmount;
+        const updatedIncome = currentIncome - transactionAmount;
         incomeAmountEl.textContent = updatedIncome
         console.log(`Current Income: ${currentIncome}`);
         console.log(`Updated Income: ${updatedIncome}`);
@@ -39,13 +112,20 @@ const removeTransactionItemEl = transactionContainerEl.addEventListener('click',
         console.log(`Current Expenses: ${currentExpenses}`)
         console.log(`Updated Current Expenses: ${updatedExpenses}`)
     }
-
+    
     //Update main balance
     const income = +incomeAmountEl.textContent
     const expenses = +expenseAmountEl.textContent
-    const updatedMainBalance = income - expenses;
-    balanceNumberEl.textContent = updatedMainBalance
+    const updatedMainBalance = income - (expenses*-1);
+    balanceNumberEl.textContent = updatedMainBalance;
+    console.log(`Income: ${income}`)
+    console.log(`Expenses: ${expenses}`)
     console.log(`Updated Main Balance: ${updatedMainBalance}`)
-
     
-})
+    //Make red balance negative
+    if(updatedMainBalance < 0) {
+    balanceNumberEl.style.color = 'red';
+    }
+}
+
+const removeTransactionItemEl = transactionContainerEl.addEventListener('click', clickHandler);
