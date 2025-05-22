@@ -266,9 +266,23 @@ button {
     padding: 8px;
 }
 
-/* .expenses-amount {
-    color: red;
-} */
+.header-view {
+    display: flex;
+    flex-direction: row;
+}
+
+.first-title {
+    margin-right: 8px;
+}
+
+.second-title {
+    font-family: oblique;
+    font-style: italic;
+    font-variation-settings: 'wght' 700;
+    color: #0072e4;
+    letter-spacing: 0.5px;
+    font-size: 20px;
+}
 
 @media screen and (max-width: 800px) {
     .wrapper {
