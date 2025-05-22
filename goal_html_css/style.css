@@ -266,6 +266,9 @@ button {
     padding: 8px;
 }
 
+/* .expenses-amount {
+    color: red;
+} */
 
 @media screen and (max-width: 800px) {
     .wrapper {
