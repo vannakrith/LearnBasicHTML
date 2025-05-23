@@ -6,7 +6,7 @@ const expenseAmountEl = document.querySelector('.expenses-amount');
 const formEl = document.querySelector('.input-form');
 const inputDescriptionEl = document.querySelector('.input--description');
 const inputAmountEl = document.querySelector('.input--amount');
-const transactionBtnEl = document.querySelector('.transaction__btn');
+//const transactionBtnEl = $('.transaction__btn');
 
 
 //Handle when click Add button in the form
@@ -141,16 +141,21 @@ const submitHandler = (submitEvent) => {
     submitEvent.preventDefault();
     const description = inputDescriptionEl.value;
     const inputAmount = +inputAmountEl.value;
+   if (inputAmount === 0) {
+    alert('Please enter a valid amount')
+    return; //stop proceeed further
+   }
    
-    const insertTransactionHTML = `
-        <li class="transaction transaction--${inputAmount > 0 ? 'income' : 'expenses' }">
-            <span class="transaction__text">${description}</span>
-            <span class="transaction__amount transaction-increase">${inputAmount}</span>
-        <button class="transaction__btn">x</button>
-        </li>
-    `;
+  const insertTransactionHTML = `
+      <li class="transaction transaction--${inputAmount > 0 ? 'income' : 'expenses' }">
+          <span class="transaction__text">${description}</span>
+          <span class="transaction__amount transaction-increase">${inputAmount}</span>
+      <button class="transaction__btn">x</button>
+      </li>
+  `;
 
-    transactionContainerEl.insertAdjacentHTML('beforeend', insertTransactionHTML)
+  transactionContainerEl.insertAdjacentHTML('beforeend', insertTransactionHTML)
+
 
     //Clear input and unfocus the field
     formEl.reset();
@@ -158,34 +163,34 @@ const submitHandler = (submitEvent) => {
 
     //Calculate income
 
-    let afterIncome = +incomeAmountEl.textContent;
-    let afterExpenses = +expenseAmountEl.textContent;
+    let currentIncome = +incomeAmountEl.textContent;
+    let currentExpenses = +expenseAmountEl.textContent;
 
     if (inputAmount > 0) {
         //Update income
-       const beforeIncome = +incomeAmountEl.textContent;
-        afterIncome = beforeIncome + inputAmount;
-       incomeAmountEl.textContent = afterIncome
-       console.log(`After income amount: ${afterIncome}`)
-       if (afterIncome > 0) {
+       currentIncome += inputAmount;
+       incomeAmountEl.textContent = currentIncome
+       console.log(`After income amount: ${currentIncome}`)
+       if (currentIncome > 0) {
             incomeAmountEl.style.color = 'Green'
        }
     }
+    
     else {
         //Update expenses
-        const beforeExpenses = +expenseAmountEl.textContent;
-         afterExpenses = beforeExpenses + inputAmount
-        expenseAmountEl.textContent = afterExpenses
-        console.log(`After expenses: ${afterExpenses}`)
+       /// const currentExpenses = +expenseAmountEl.textContent;
+         currentExpenses += inputAmount
+        expenseAmountEl.textContent = currentExpenses
+        console.log(`After expenses: ${currentExpenses}`)
 
-        if (afterExpenses < 0) {
+        if (currentExpenses < 0) {
             expenseAmountEl.style.color = 'red';
         }
     }
 
     //Update Balance
     const beforeBalance = +balanceNumberEl.textContent;
-    const afterBalance = afterIncome - (afterExpenses*-1);
+    const afterBalance = currentIncome + (currentExpenses);
     balanceNumberEl.textContent = afterBalance;
     afterBalance < 0 ? balanceNumberEl.style.color = 'red' : balanceNumberEl.style.color = 'green'
 
