@@ -237,7 +237,6 @@ const clickHandler = (clickEvent) => {
   }
 
   //Update balance
-  const balanceBefore = +balanceNumberEl.textContent;
   const balanceAfter = afterIncome - (afterExpenses*-1)
   balanceNumberEl.textContent = balanceAfter;
   console.log(`Balance after transaction: ${balanceAfter}`)
